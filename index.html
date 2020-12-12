@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css">
+    <style>
+        body{
+            overflow: hidden;
+        }
+        textarea{
+            padding: 10px;
+            width: 100vw;
+            height: 100vh;
+            outline: none;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <textarea id="msg" spellcheck="false"></textarea>
+    <script>
+        const socket = new WebSocket('ws://192.168.86.150:4000')
+        const msgArea = document.querySelector('#msg')
+
+        // socket.addEventListener('open', e =>{
+        //     console.log('connected to server')
+        // })
+
+        socket.addEventListener('message', e => {
+            msgArea.value = e.data
+        })
+
+        
+        msgArea.addEventListener('input',(e)=>{
+            const msg = e.target.value
+            socket.send(msg)
+        })
+    </script>
+</body>
+</html>
